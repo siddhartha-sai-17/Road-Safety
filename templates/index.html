@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Damage Detection System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- ══ SIDEBAR ═══════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">RD</div>
+      <div class="logo-text">
+        <span class="logo-name">RoadScan</span>
+        <span class="logo-ver">v2.0 · CNN</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#detect" class="nav-item active" data-section="detect">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Detect
+      </a>
+      <a href="#about" class="nav-item" data-section="about">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        About
+      </a>
+      <a href="#history" class="nav-item" data-section="history">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+        History
+      </a>
+    </nav>
+
+    <div class="sidebar-model">
+      <div class="model-label">Active model</div>
+      <div class="model-name">EfficientNetB0</div>
+      <div class="model-meta">
+        <span class="chip">Transfer learning</span>
+        <span class="chip">3 classes</span>
+      </div>
+      <div class="model-classes">
+        <div class="class-dot pothole"></div><span>Pothole</span>
+        <div class="class-dot crack"></div><span>Crack</span>
+        <div class="class-dot manhole"></div><span>Manhole</span>
+      </div>
+    </div>
+
+    <div class="sidebar-health" id="healthStatus">
+      <div class="health-dot"></div>
+      <span>Checking model…</span>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══════════════════════════════════════════════ -->
+  <main class="main">
+
+    <!-- ── HEADER ──────────────────────────────────────── -->
+    <header class="page-header">
+      <div class="header-text">
+        <p class="header-eyebrow">Smart City Infrastructure · CNN</p>
+        <h1 class="header-title">AI-Based Road Damage<br><em>Detection System</em></h1>
+        <p class="header-sub">Upload a road image to classify damage type, confidence level, and get automated repair recommendations.</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-card">
+          <div class="stat-val">2 009</div>
+          <div class="stat-lbl">Training images</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">3</div>
+          <div class="stat-lbl">Damage classes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">224px</div>
+          <div class="stat-lbl">Input resolution</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── ABOUT SECTION ────────────────────────────────── -->
+    <section id="about" class="about-section panel">
+      <h2 class="panel-title">About the project</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon danger-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>Why road monitoring matters</h3>
+          <p>Deteriorating roads cost billions annually, cause accidents, and damage vehicles. Manual inspection is slow and error-prone — AI enables continuous, scalable infrastructure monitoring across entire city networks.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon info-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 0 1 7.38 16.75"/><path d="M9.6 21.4A10 10 0 0 1 2 12"/><path d="M12 2v4"/><path d="M12 18v4"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>Role of CNNs in computer vision</h3>
+          <p>Convolutional Neural Networks learn spatial features automatically — edges, textures, and damage patterns — making them ideal for visual defect detection without hand-crafted rules. Transfer learning from ImageNet gives powerful priors with limited training data.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon success-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Industry applications</h3>
+          <p>Used by municipalities for smart maintenance scheduling, insurance firms for damage assessment, autonomous vehicles for hazard avoidance, and civil engineering teams for large-scale road audit automation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── DETECT SECTION ───────────────────────────────── -->
+    <section id="detect" class="detect-section">
+
+      <div class="upload-panel panel">
+        <h2 class="panel-title">Upload image</h2>
+
+        <div class="upload-zone" id="dropZone" role="button" tabindex="0" aria-label="Upload road image — click or drag and drop">
+          <div class="upload-inner" id="uploadInner">
+            <div class="upload-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <p class="upload-hint">Drop road image here</p>
+            <p class="upload-sub">JPG · PNG · WEBP · max 10 MB</p>
+            <label class="upload-btn" for="fileInput">Browse files</label>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" style="display:none" aria-label="Choose image">
+        </div>
+
+        <div class="preview-area" id="previewArea" style="display:none">
+          <img id="previewImg" src="" alt="Uploaded road image" class="preview-img">
+          <div class="preview-meta">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span id="previewName">image.jpg</span>
+            <span id="previewSize" class="muted"></span>
+            <button class="remove-btn" id="removeBtn" aria-label="Remove image">× Remove</button>
+          </div>
+        </div>
+
+        <button class="run-btn" id="runBtn" disabled aria-label="Run damage detection">
+          <span class="run-btn-text">Run detection</span>
+          <span class="run-btn-arrow">→</span>
+        </button>
+      </div>
+
+      <div class="results-panel" id="resultsPanel">
+        <div class="placeholder-state" id="placeholderState">
+          <div class="placeholder-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <p>Upload an image and run detection<br>to see results here</p>
+        </div>
+
+        <div class="result-content" id="resultContent" style="display:none">
+          <div class="pred-header">
+            <h2 class="panel-title">Detection result</h2>
+            <div class="demo-badge" id="demoBadge" style="display:none">Demo mode</div>
+          </div>
+          <div class="pred-cards">
+            <div class="pred-card primary-pred">
+              <div class="pred-label">Damage type</div>
+              <div class="pred-value" id="resType">—</div>
+            </div>
+            <div class="pred-card">
+              <div class="pred-label">Confidence</div>
+              <div class="pred-value accent" id="resConf">—</div>
+            </div>
+            <div class="pred-card">
+              <div class="pred-label">Severity</div>
+              <div class="pred-value" id="resSev">—</div>
+            </div>
+          </div>
+          <div class="panel section-gap">
+            <h3 class="section-title">Class confidence</h3>
+            <div id="confBars"></div>
+          </div>
+          <div class="panel section-gap">
+            <h3 class="section-title">Probability distribution</h3>
+            <div class="donut-wrap">
+              <canvas id="donutChart" width="180" height="180"></canvas>
+              <div class="donut-legend" id="donutLegend"></div>
+            </div>
+          </div>
+          <div class="panel section-gap">
+            <h3 class="section-title">Recommendations</h3>
+            <div id="recCards"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── HISTORY ──────────────────────────────────────── -->
+    <section id="history" class="history-section panel">
+      <h2 class="panel-title">Detection history</h2>
+      <div id="historyList">
+        <p class="muted" style="font-size:13px">No detections yet in this session.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
